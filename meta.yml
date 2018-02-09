@@ -1,0 +1,4 @@
+elems:
+    - src: ^(zshrc)$
+      dst: "<%= get_var! :'zsh.zshrc_path', type: :file %>"
+      only: f?zsh
