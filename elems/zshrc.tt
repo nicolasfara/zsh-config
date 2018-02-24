@@ -49,7 +49,7 @@ done
 
 # ───────────────────────────────────────────────────── Global configuration ──┐
 export TERM='xterm-256color'
-export ZSH_ROOT_DIR="<%= local! :custom_dir %>/.zsh"
+export ZSH_ROOT_DIR="<%= local! :custom_dir %>"
 export ZSH_PLUGINS_DIR="${ZSH_ROOT_DIR}/plugins"
 export ZSH_PLUGINS_CONFIGS_DIR="${ZSH_PLUGINS_DIR}/configs"
 export ZSH_CACHE_DIR="${HOME}/.zcache"
