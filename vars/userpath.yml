@@ -1,2 +1,3 @@
 zsh:
-    zshrc_path: ~/.zshrc
+  zshrc_path: ~/.zshrc
+  custom_dir: ~/.zsh

@@ -1,8 +1,55 @@
 #!/usr/bin/env zsh
+# ─────────────────────────────────────────────────────────────────────────────┐
+#
+# Name:    zshrc.tt
+# Summary: %TODO%
+# Authors:
+#   - Nicolas Farabegoli <nicolas.farabegoli@gmail.com> (nicolasfara)
+#
+# Project:
+#   - Homepage:        https://github.com/nicolasfara/
+#   - Getting started: see README.md in the project root folder
+#
+# License: Apache v2.0 (see below)
+#
+# ─────────────────────────────────────────────────────────────────────────────┤
+#
+# Copyright  2018
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+# or implied. See the License for the specific language governing
+# permissions and limitations under the License.
+#
+# ─────────────────────────────────────────────────────────────────────────────┘
+<%
+  define_locals do
+    variable "zsh.custom_dir", type: :directory, as: :custom_dir
+  end
+%>
+# ─────────────────────────────────────────────────────────────────────────────┘
 
-# ┌──────────────────────────────────────────────────── Global configuration ──┐
+
+# ──────────────────────────────────────────────────────── Load system stuff ──┤
+
+for _base_dir in "/usr/share/zsh/site-contrib" "/usr/local/share/zsh/site-contrib"; do
+  if [[ -d "${_base_dir}" ]]; then
+    for f in $(ls "${_base_dir}"); do
+      source "${_base_dir}/${f}"
+    done
+  fi
+done
+
+# ───────────────────────────────────────────────────── Global configuration ──┐
 export TERM='xterm-256color'
-export ZSH_ROOT_DIR="${HOME}/.zsh"
+export ZSH_ROOT_DIR="<%= local! :custom_dir %>/.zsh"
 export ZSH_PLUGINS_DIR="${ZSH_ROOT_DIR}/plugins"
 export ZSH_PLUGINS_CONFIGS_DIR="${ZSH_PLUGINS_DIR}/configs"
 export ZSH_CACHE_DIR="${HOME}/.zcache"
@@ -13,11 +60,10 @@ source /etc/profile
 export PATH="${PATH}:/usr/sbin/:/home/nicolas/.local/bin/"
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 export FIZZY_DIR=~/.fizzy
-. ~/Documents/git-repo/z/z.sh
 
 # ────────────────────────────────────────────────────── Zstyles for plugins ──┤
 zstyle ':editor' dot-expansion 'yes'
-zstyle ':editor' key-bindings  'vi'
+zstyle ':editor' key-bindings  '<%= has_feature?(:vim) ? :vi : :emacs %>'
 
 # ──────────────────────────────────────────────────────────────── Load ZGen ──┤
 
@@ -33,20 +79,25 @@ HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
 HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 if [[ -n "${key_info}" ]]; then
-    # Emacs.
-    bindkey -M emacs "$key_info[Control]P" history-substring-search-up
-    bindkey -M emacs "$key_info[Control]N" history-substring-search-down
-    # Vi.
-    bindkey -M vicmd "k" history-substring-search-up
-    bindkey -M vicmd "j" history-substring-search-down
-    # Emacs and Vi.
-    for keymap in 'emacs' 'viins'; do
-        bindkey -M "$keymap" "$key_info[Up]"   history-substring-search-up
-        bindkey -M "$keymap" "$key_info[Down]" history-substring-search-down
-    done
+  # Emacs.
+  bindkey -M emacs "$key_info[Control]P" history-substring-search-up
+  bindkey -M emacs "$key_info[Control]N" history-substring-search-down
+  # Vi.
+  bindkey -M vicmd "k" history-substring-search-up
+  bindkey -M vicmd "j" history-substring-search-down
+  # Emacs and Vi.
+  for keymap in 'emacs' 'viins'; do
+    bindkey -M "$keymap" "$key_info[Up]"   history-substring-search-up
+    bindkey -M "$keymap" "$key_info[Down]" history-substring-search-down
+  done
 fi
 
-
+# Configure `zsh-autosuggestions`.
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=32
+# CTRL+space: Accept the current suggestion.
+#bindkey "$key_info[Control] " autosuggest-accept
+# CTRL+f: Accept the next word of the current suggestion.
+bindkey "$key_info[Control]F" forward-word
 # Configure `zsh-autosuggestions`.
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=32
 # CTRL+space: Accept the current suggestion.
@@ -56,16 +107,21 @@ bindkey "$key_info[Control]F" forward-word
 
 #Load Plugins
 if ! zgen saved; then
+  zgen load mafredri/zsh-async
+  zgen load zsh-users/zsh-autosuggestions
+  zgen load zsh-users/zsh-syntax-highlighting # Highlight words.
+  zgen load momo-lab/zsh-abbrev-alias # Abbreviations (like fish :D)
+  zgen load zsh-users/zsh-history-substring-search # Search in substrings.
+  zgen load zsh-users/zsh-completions # Additional completion definitions.
+  zgen load nicolasfara/zsh-apr # Load theme.
+  zgen load alem0lars/zsh-editor
+  zgen load alem0lars/zsh-history
+  zgen load wookayin/fzf-fasd # Open fzf's recent directories with fzf.
+  zgen load nicolasfara/zsh-external-tools # Support for external tools.
 
-	zgen load mafredri/zsh-async
-	zgen load zsh-users/zsh-autosuggestions
-	zgen load zsh-users/zsh-syntax-highlighting # Highlight words.
-	zgen load zsh-users/zsh-history-substring-search # Search in substrings.
-	zgen load zsh-users/zsh-completions # Additional completion definitions.
-	zgen load nicolasfara/zsh-apr # Load theme.
-	zgen load alem0lars/zsh-editor
-	zgen load alem0lars/zsh-history
-    zgen load wookayin/fzf-fasd # Open fzf's recent directories with fzf.
-
-	zgen save
+  zgen save
 fi
+# ─────────────────────────────────────────────────────────────────────────────┘
+
+
+# vim: set filetype=eruby.zsh :
