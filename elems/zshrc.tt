@@ -60,7 +60,8 @@ source /etc/profile
 export PATH="${PATH}:/usr/sbin/:/home/nicolas/.local/bin/"
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 export FIZZY_DIR=~/.fizzy
-
+ZLE_RPROMPT_INDENT=0
+export GPG_TTY=$(tty)
 # ────────────────────────────────────────────────────── Zstyles for plugins ──┤
 zstyle ':editor' dot-expansion 'yes'
 zstyle ':editor' key-bindings  '<%= has_feature?(:vim) ? :vi : :emacs %>'
