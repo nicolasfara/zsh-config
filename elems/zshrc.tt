@@ -57,8 +57,10 @@ export ZSH_CACHE_DIR="${HOME}/.zcache"
 export ZGEN_DIR="${ZSH_PLUGINS_DIR}/repos"
 export ZGEN_INIT="${ZSH_PLUGINS_DIR}/init.zsh"
 source /etc/profile
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 export PATH="${PATH}:/usr/sbin/:/home/nicolas/.local/bin/"
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+#export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 export FIZZY_DIR=~/.fizzy
 ZLE_RPROMPT_INDENT=0
 export GPG_TTY=$(tty)
@@ -119,6 +121,7 @@ if ! zgen saved; then
   zgen load alem0lars/zsh-history
   zgen load wookayin/fzf-fasd # Open fzf's recent directories with fzf.
   zgen load nicolasfara/zsh-external-tools # Support for external tools.
+  zgen load Tarrasch/zsh-autoenv
 
   zgen save
 fi
