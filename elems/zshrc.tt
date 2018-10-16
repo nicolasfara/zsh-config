@@ -57,10 +57,11 @@ export ZSH_CACHE_DIR="${HOME}/.zcache"
 export ZGEN_DIR="${ZSH_PLUGINS_DIR}/repos"
 export ZGEN_INIT="${ZSH_PLUGINS_DIR}/init.zsh"
 source /etc/profile
+# Source fzf config files
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
+# add more bin path
 export PATH="${PATH}:/usr/sbin/:/home/nicolas/.local/bin/"
-#export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 export FIZZY_DIR=~/.fizzy
 ZLE_RPROMPT_INDENT=0
 export GPG_TTY=$(tty)
