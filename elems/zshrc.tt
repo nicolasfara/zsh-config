@@ -65,6 +65,7 @@ export PATH="${PATH}:/usr/sbin/:/home/nicolas/.local/bin/"
 export FIZZY_DIR=~/.fizzy
 ZLE_RPROMPT_INDENT=0
 export GPG_TTY=$(tty)
+#export JUPYTERLAB_DIR=$HOME/.local/share/jupyter/lab
 # ────────────────────────────────────────────────────── Zstyles for plugins ──┤
 zstyle ':editor' dot-expansion 'yes'
 zstyle ':editor' key-bindings  '<%= has_feature?(:vim) ? :vi : :emacs %>'
@@ -128,5 +129,3 @@ if ! zgen saved; then
 fi
 # ─────────────────────────────────────────────────────────────────────────────┘
 
-
-# vim: set filetype=eruby.zsh :
