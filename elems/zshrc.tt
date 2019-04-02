@@ -113,12 +113,12 @@ bindkey "$key_info[Control]F" forward-word
 #Load Plugins
 if ! zgen saved; then
   zgen load mafredri/zsh-async
+  zgen load sindresorhus/pure
   zgen load zsh-users/zsh-autosuggestions
   zgen load zsh-users/zsh-syntax-highlighting # Highlight words.
   zgen load momo-lab/zsh-abbrev-alias # Abbreviations (like fish :D)
   zgen load zsh-users/zsh-history-substring-search # Search in substrings.
   zgen load zsh-users/zsh-completions # Additional completion definitions.
-  zgen load nicolasfara/zsh-apr # Load theme.
   zgen load alem0lars/zsh-editor
   zgen load alem0lars/zsh-history
   zgen load wookayin/fzf-fasd # Open fzf's recent directories with fzf.
